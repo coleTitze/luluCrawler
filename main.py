@@ -1,9 +1,9 @@
 from bs4 import BeautifulSoup
 import requests
 from discord import Webhook, RequestsWebhookAdapter
+import time
 
 # Constants
-# url to use
 DISCORD_URL = 'https://discord.com/api/webhooks/841543191428726845/hOKjaElgMf9cu1En2-2KbBWYYHaIteuzWSypVfXol9ofHwUywXQXLuVJ7epZXkA5lZgx'
 URL = 'https://shop.lululemon.com/p/womens-outerwear/Scuba-Oversized-12-Zip-Hoodie/_/prod9960807'
 desiredColors = ['Lavender Dew', 'Spiced Chai']
@@ -38,17 +38,18 @@ def sendDiscordMsg(colors):
     webhook.send(msg)
 
 
+# Every 3 minutes check if wanted color is available
 def main():
     flag = True
     while flag:
         colors = getColors()
 
         colors = wantedColors(colors)
+        # If wanted colors are found send message to discord
         if len(colors) > 0:
             # Send message
-            print(colors)
             sendDiscordMsg(colors)
-        flag = False
+        time.sleep(3*60)
 
 
 main()
