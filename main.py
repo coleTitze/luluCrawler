@@ -45,9 +45,9 @@ def main():
     flag = 0
     while True:
         colors = getColors()
-        # 1440 minutes (1 day) has gone by
+        # 24 hours (1 day) has gone by
         # Re-add found colors and reset timer
-        if flag == 1440:
+        if flag == 24:
             for color in foundColors:
                 desiredColors.append(color)
                 foundColors.remove(color)
@@ -63,7 +63,7 @@ def main():
             for color in colors:
                 foundColors.append(color)
                 desiredColors.remove(color)
-        time.sleep(1*60)
+        time.sleep(60*60)
         print(flag)
         flag += 1
 
