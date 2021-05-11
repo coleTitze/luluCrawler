@@ -1,10 +1,12 @@
 from bs4 import BeautifulSoup
 import requests
+from discord import Webhook, RequestsWebhookAdapter
 
 # Constants
 # url to use
+DISCORD_URL = 'https://discord.com/api/webhooks/841543191428726845/hOKjaElgMf9cu1En2-2KbBWYYHaIteuzWSypVfXol9ofHwUywXQXLuVJ7epZXkA5lZgx'
 URL = 'https://shop.lululemon.com/p/womens-outerwear/Scuba-Oversized-12-Zip-Hoodie/_/prod9960807'
-desiredColors = ['Lavender Dew', 'Pink Mist']
+desiredColors = ['Lavender Dew', 'Spiced Chai']
 
 
 # Returns list of current colors on lulu's website
@@ -29,6 +31,13 @@ def wantedColors(colors):
     return colorsFound
 
 
+# Sends message to discord webhook to display in server
+def sendDiscordMsg(colors):
+    msg = "Colors: " + str(colors) + " have become available"
+    webhook = Webhook.from_url(DISCORD_URL, adapter=RequestsWebhookAdapter())
+    webhook.send(msg)
+
+
 def main():
     flag = True
     while flag:
@@ -38,6 +47,7 @@ def main():
         if len(colors) > 0:
             # Send message
             print(colors)
+            sendDiscordMsg(colors)
         flag = False
 
 
