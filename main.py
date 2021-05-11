@@ -6,7 +6,7 @@ import time
 # Constants
 DISCORD_URL = 'https://discord.com/api/webhooks/841543191428726845/hOKjaElgMf9cu1En2-2KbBWYYHaIteuzWSypVfXol9ofHwUywXQXLuVJ7epZXkA5lZgx'
 URL = 'https://shop.lululemon.com/p/womens-outerwear/Scuba-Oversized-12-Zip-Hoodie/_/prod9960807'
-desiredColors = ['Lavender Dew', 'Spiced Chai', 'desert sun']
+desiredColors = ['Lavender Dew', 'Spiced Chai', 'desert sun', 'Black'] # Black is used for daily update that still working
 
 
 # Returns list of current colors on lulu's website
@@ -45,9 +45,9 @@ def main():
     flag = 0
     while True:
         colors = getColors()
-        # 720 minutes have gone by
-        # Readd found colors and reset timer
-        if flag == 720:
+        # 1440 minutes (1 day) has gone by
+        # Re-add found colors and reset timer
+        if flag == 1440:
             for color in foundColors:
                 desiredColors.append(color)
                 foundColors.remove(color)
