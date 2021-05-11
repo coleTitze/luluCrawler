@@ -6,7 +6,7 @@ import time
 # Constants
 DISCORD_URL = 'https://discord.com/api/webhooks/841543191428726845/hOKjaElgMf9cu1En2-2KbBWYYHaIteuzWSypVfXol9ofHwUywXQXLuVJ7epZXkA5lZgx'
 URL = 'https://shop.lululemon.com/p/womens-outerwear/Scuba-Oversized-12-Zip-Hoodie/_/prod9960807'
-desiredColors = ['Lavender Dew', 'Spiced Chai', 'Black']
+desiredColors = ['Lavender Dew', 'Spiced Chai', 'desert sun']
 
 
 # Returns list of current colors on lulu's website
