@@ -6,7 +6,7 @@ import time
 # Constants
 DISCORD_URL = 'https://discord.com/api/webhooks/841543191428726845/hOKjaElgMf9cu1En2-2KbBWYYHaIteuzWSypVfXol9ofHwUywXQXLuVJ7epZXkA5lZgx'
 URL = 'https://shop.lululemon.com/p/womens-outerwear/Scuba-Oversized-12-Zip-Hoodie/_/prod9960807'
-desiredColors = ['Lavender Dew', 'Spiced Chai']
+desiredColors = ['Lavender Dew', 'Spiced Chai', 'Black']
 
 
 # Returns list of current colors on lulu's website
@@ -26,7 +26,7 @@ def wantedColors(colors):
     colorsFound = []
     for i in colors:
         for j in desiredColors:
-            if i == j:
+            if str(i).lower() == str(j).lower():
                 colorsFound.append(i)
     return colorsFound
 
@@ -38,18 +38,34 @@ def sendDiscordMsg(colors):
     webhook.send(msg)
 
 
-# Every 3 minutes check if wanted color is available
+# Every minute check if wanted color is available
+# If found send message and remove color from checker for 12 hours
 def main():
-    flag = True
-    while flag:
+    foundColors = []
+    flag = 0
+    while True:
         colors = getColors()
+        # 720 minutes have gone by
+        # Readd found colors and reset timer
+        if flag == 720:
+            for color in foundColors:
+                desiredColors.append(color)
+                foundColors.remove(color)
+                flag = 0
 
         colors = wantedColors(colors)
         # If wanted colors are found send message to discord
         if len(colors) > 0:
             # Send message
             sendDiscordMsg(colors)
-        time.sleep(3*60)
+            flag = 0
+            # Do not relook for color if it was found for a few hours
+            for color in colors:
+                foundColors.append(color)
+                desiredColors.remove(color)
+        time.sleep(1*60)
+        print(flag)
+        flag += 1
 
 
 main()
